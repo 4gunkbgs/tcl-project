@@ -12,21 +12,6 @@ use App\Models\Tag;
 class HomeController extends Controller
 {
     public function index(){    
-        
-        // DB::beginTransaction();
-
-        // try {
-
-        //     $this->noteStore();
-
-        //     $this->todoStore();
-            
-        //     DB::commit(); 
-
-        // } catch (\Throwable $th) {     
-
-        //     DB::rollback();
-        // }
                                 
         return view('welcome');
     }
@@ -39,31 +24,35 @@ class HomeController extends Controller
     }
 
     public function todoStore(Request $request){
-                         
-        DB::beginTransaction();
+                   
+        //untuk start transaction
+        DB::beginTransaction(); 
 
         try {
             
+            //menyimpan judul dan isi todo pada tabel todos
             $todo = new Todo;
             $todo->user_id = 1;
             $todo->judul = $request->judulTodo;
             $todo->isi = $request->isiTodo;
-            $todo->save();
-            // dd($todo->id);
+            $todo->save();            
 
+            //menyimpan tag pada tabel tags
             $tags = new Tag;
             $tags->tag = $request->tags;
             $tags->todos_id = $todo->id;
-            $tags->sav();
+            $tags->save();
 
             DB::commit();            
 
         } catch (\Throwable $th) {
             
+            //rollback jika terjadi kesalahan
             DB::rollback();
             return redirect('todo')->with('status', 'Terjadi Kesalahan');
         }
 
+        //keterangan jika sukses
         return redirect('todo')->with('status', 'Sukses');    
     }
 

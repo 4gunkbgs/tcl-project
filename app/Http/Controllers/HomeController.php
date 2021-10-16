@@ -29,7 +29,7 @@ class HomeController extends Controller
         DB::beginTransaction(); 
 
         try {
-            
+
             //menyimpan judul dan isi todo pada tabel todos
             $todo = new Todo;
             $todo->user_id = 1;

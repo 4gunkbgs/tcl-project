@@ -15,12 +15,13 @@
     <nav class="navbar navbar-light bg-success">
         <div class="container-fluid">
             <span class="navbar-brand mb-0 h1"> Memo </span>
+            <a href="{{ route('signout') }}" class="navbar-brand mb-0 h1"> Log Out </a> 
         </div>
     </nav>
     <br>
     <div class="d-grid gap-2">
         <a class="btn btn-primary btn-lg" href="{{'todo'}}"> To-do List </a>
-        <a class="btn btn-danger btn-lg" href="{{'notes'}}"> Notes List </a>
+        
     </div>
 </body>
 

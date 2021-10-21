@@ -10,12 +10,7 @@ use App\Models\Note;
 use App\Models\Tag;
 
 class HomeController extends Controller
-{
-    public function index(){    
-                                
-        return view('welcome');
-    }
-
+{  
     public function todo(){
         
         $todoList = Todo::all();            
@@ -23,7 +18,7 @@ class HomeController extends Controller
         return view('todo', ['todoList' => $todoList]);
     }
 
-    public function todoStore(Request $request){
+    public function todoStore(Request $request){        
                    
         //untuk start transaction
         DB::beginTransaction(); 
@@ -41,7 +36,7 @@ class HomeController extends Controller
             $tags = new Tag;
             $tags->tag = $request->tags;
             $tags->todos_id = $todo->id;
-            $tags->save();
+            $tags->sav();
 
             DB::commit();            
 

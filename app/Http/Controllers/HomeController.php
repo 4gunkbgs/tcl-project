@@ -62,5 +62,13 @@ class HomeController extends Controller
         
         return back();
     }   
+
+    public function todoDelete(Request $request){
+
+        $todo = Todo::findOrFail($request->deleteTodoId);
+        $todo->delete();
+
+        return back();        
+    }
     
 }

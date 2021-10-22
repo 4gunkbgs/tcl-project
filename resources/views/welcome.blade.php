@@ -78,8 +78,11 @@
             <td>
                 <button type="button" class="btn btn-primary" data-judul="{{$list->judul}}" data-isi="{{ $list->isi }}" data-id="{{ $list->id }}" data-bs-toggle="modal" data-bs-target="#editModal">
                     Edit
-                </button>                 
-            </td>            
+                </button>  
+                <button type="button" class="btn btn-danger" data-id="{{ $list->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                    Delete
+                </button>               
+            </td>                      
         </tr>
 
         @endforeach
@@ -114,6 +117,36 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <input type="submit" class="btn btn-success" name="submit" value="Edit">
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Todo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('todo.delete')}}" method="POST">
+                        <div class="form-group">                            
+                            <input type="hidden" name="deleteTodoId" id="deleteTodoId" value="">                                                       
+                            <div class="h1">
+                                Yakin akan delete?
+                            </div>
+                        </div>                            
+                        @csrf                        
+                        @method('DELETE')
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-danger" name="submit" value="Delete">
                         </div>
                     </form>
                 </div>

@@ -24,9 +24,9 @@
 
     
     <script>
-        //script untuk modal
+        //script untuk untuk edit modal
         var myModal = document.getElementById('editModal')        
-
+        console.log (editModal)
         editModal.addEventListener('shown.bs.modal', function (event) {
             console.log ('modal opened')
 
@@ -43,7 +43,20 @@
             judulInput.value = judulData   
             isiInput.value = isiData 
             todoIdInput.value = todoId 
+        })
 
+        //script untuk deleteModal
+        var deleteModal = document.getElementById('deleteModal')        
+        
+        deleteModal.addEventListener('shown.bs.modal', function (event) {
+            console.log ('modal opened')
+
+            var button = event.relatedTarget     
+            var todoId = button.getAttribute('data-id')     
+            const todoIdInput = document.getElementById('deleteTodoId')            
+                      
+            todoIdInput.value = todoId 
+            console.log(todoIdInput.value)
         })
         
     </script>

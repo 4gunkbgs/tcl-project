@@ -20,7 +20,7 @@ class HomeController extends Controller
     }
 
     public function todoStore(Request $request){        
-                          
+                                  
         //untuk start transaction
         DB::beginTransaction(); 
 
@@ -30,13 +30,14 @@ class HomeController extends Controller
             $todo = new Todo;
             $todo->user_id = Auth::id();
             $todo->judul = $request->judulTodo;
-            $todo->isi = $request->isiTodo;
+            $todo->catatan = $request->catatanTodo;
+            $todo->tanggal = $request->dateTodo;
             $todo->save();            
 
             //menyimpan tag pada tabel tags
             $tags = new Tag;
-            $tags->tag = $request->tags;
-            $tags->todos_id = $todo->id;
+            $tags->tag_name = $request->tags;   
+            $tags->todo_id = $todo->id;         
             $tags->save();
 
             DB::commit();            
@@ -57,7 +58,8 @@ class HomeController extends Controller
         $todo = Todo::findOrFail($request->todoId);
 
         $todo->judul = $request->judulTodo;
-        $todo->isi = $request->isiTodo;
+        $todo->catatan = $request->catatanTodo;
+        $todo->tanggal = $request->tanggal;
         $todo->save(); 
         
         return back();
@@ -68,7 +70,7 @@ class HomeController extends Controller
         $todo = Todo::findOrFail($request->deleteTodoId);
         $todo->delete();
 
-        return back();        
+        return back();           
     }
     
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTagsIdToTodosTable extends Migration
+class AddTodoIdToTag extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class AddTagsIdToTodosTable extends Migration
      */
     public function up()
     {
-        Schema::table('todos', function (Blueprint $table) {
-            $table->bigInteger('tags_id')->unsigned();
-
-            $table->foreign('tags_id')->references('id')->on('tags');
+        Schema::table('tags', function (Blueprint $table) {
+            $table->bigInteger('todo_id')->unsigned();
+            
+            $table->foreign('todo_id')->references('id')->on('todos')->onDelete('cascade');
         });
     }
 
@@ -27,7 +27,7 @@ class AddTagsIdToTodosTable extends Migration
      */
     public function down()
     {
-        Schema::table('todos', function (Blueprint $table) {
+        Schema::table('tags', function (Blueprint $table) {
             //
         });
     }

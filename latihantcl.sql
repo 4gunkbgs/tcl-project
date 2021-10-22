@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2021 at 09:56 AM
+-- Generation Time: Oct 22, 2021 at 10:59 AM
 -- Server version: 10.4.21-MariaDB-log
 -- PHP Version: 8.0.10
 
@@ -66,29 +66,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (10, '2021_10_16_004253_create_tags_table', 5),
 (11, '2021_10_16_012440_add_todos_id_to_tags_table', 6),
 (12, '2021_10_16_013114_add_foreign_todos_id_to_tags_table', 7),
-(13, '2021_10_16_013428_add_tags_id_to_todos_table', 8);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `notes`
---
-
-CREATE TABLE `notes` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `judul` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `isi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `notes`
---
-
-INSERT INTO `notes` (`id`, `user_id`, `judul`, `isi`, `created_at`, `updated_at`) VALUES
-(8, 1, 'Catetan Besok', 'Jadi kemarin besok MC', '2021-10-15 22:25:52', '2021-10-15 22:25:52');
+(13, '2021_10_16_013428_add_tags_id_to_todos_table', 8),
+(14, '2021_10_21_072107_add_password_to_pengguna', 9),
+(15, '2021_10_22_085406_add_on_delete_to_tags', 10);
 
 -- --------------------------------------------------------
 
@@ -113,15 +93,17 @@ CREATE TABLE `pengguna` (
   `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `pengguna`
 --
 
-INSERT INTO `pengguna` (`id`, `nama`, `email`, `created_at`, `updated_at`) VALUES
-(1, 'agung', 'agung@gmail.com', '2021-10-15 06:45:13', '2021-10-15 06:45:13');
+INSERT INTO `pengguna` (`id`, `nama`, `email`, `created_at`, `updated_at`, `password`) VALUES
+(1, 'agung', 'agung@gmail.com', '2021-10-15 06:45:13', '2021-10-15 06:45:13', ''),
+(2, 'royan', 'royan@gmail.com', '2021-10-20 23:40:48', '2021-10-20 23:40:48', '$2y$10$hgM5SFCyT4mDoi5FRGPMWu79Jq0axizjbxoeWff9YJma8G.6MQUuq');
 
 -- --------------------------------------------------------
 
@@ -160,9 +142,7 @@ CREATE TABLE `tags` (
 --
 
 INSERT INTO `tags` (`id`, `tag`, `created_at`, `updated_at`, `todos_id`) VALUES
-(5, 'multimedia', '2021-10-15 19:08:37', '2021-10-15 19:08:37', 25),
-(6, 'database', '2021-10-15 20:00:15', '2021-10-15 20:00:15', 26),
-(7, 'Biologi', '2021-10-15 22:29:46', '2021-10-15 22:29:46', 29);
+(15, 'matematika', '2021-10-22 00:57:47', '2021-10-22 00:57:47', 43);
 
 -- --------------------------------------------------------
 
@@ -184,9 +164,7 @@ CREATE TABLE `todos` (
 --
 
 INSERT INTO `todos` (`id`, `user_id`, `judul`, `isi`, `created_at`, `updated_at`) VALUES
-(25, 1, 'praktek ss', 'besok meng foto jam 3', '2021-10-15 19:08:37', '2021-10-15 19:08:37'),
-(26, 1, 'tugas database', 'besok harus jadi erd', '2021-10-15 20:00:15', '2021-10-15 20:00:15'),
-(29, 1, 'praktek tanaman', 'besok amati pertumbuhan kecambah', '2021-10-15 22:29:46', '2021-10-15 22:29:46');
+(43, 1, 'buat function', 'besok buat function x kuadrat', '2021-10-22 00:57:47', '2021-10-22 00:57:47');
 
 -- --------------------------------------------------------
 
@@ -196,7 +174,7 @@ INSERT INTO `todos` (`id`, `user_id`, `judul`, `isi`, `created_at`, `updated_at`
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -204,6 +182,13 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'royan', 'royan@gmail.com', NULL, '$2y$10$OAwghfMimjMX48Upuv0A6uXrGDzLviUJNvDEeZY8rYDPjMfSlpH4K', NULL, '2021-10-20 23:51:21', '2021-10-20 23:51:21');
 
 --
 -- Indexes for dumped tables
@@ -221,13 +206,6 @@ ALTER TABLE `failed_jobs`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `notes`
---
-ALTER TABLE `notes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `notes_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `password_resets`
@@ -284,19 +262,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT for table `notes`
---
-ALTER TABLE `notes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `pengguna`
 --
 ALTER TABLE `pengguna`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -308,35 +280,29 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `todos`
 --
 ALTER TABLE `todos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `notes`
---
-ALTER TABLE `notes`
-  ADD CONSTRAINT `notes_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `pengguna` (`id`);
-
---
 -- Constraints for table `tags`
 --
 ALTER TABLE `tags`
-  ADD CONSTRAINT `tags_todos_id_foreign` FOREIGN KEY (`todos_id`) REFERENCES `todos` (`id`);
+  ADD CONSTRAINT `tags_todos_id_foreign` FOREIGN KEY (`todos_id`) REFERENCES `todos` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `todos`

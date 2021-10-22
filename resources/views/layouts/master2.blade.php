@@ -32,16 +32,19 @@
 
             var button = event.relatedTarget
             var judulData = button.getAttribute('data-judul')
-            var isiData = button.getAttribute('data-isi') 
+            var catatanData = button.getAttribute('data-catatan') 
+            var tanggal = button.getAttribute('data-tanggal')
             var todoId = button.getAttribute('data-id')
 
             const judulInput = document.getElementById('judulTodo')
-            const isiInput = document.getElementById('isiTodo')
+            const catatanInput = document.getElementById('catatanTodo')
             const tagInput = document.getElementById('tags')
+            const tanggalInput = document.getElementById('tanggal')
             const todoIdInput = document.getElementById('todoId')
             
             judulInput.value = judulData   
-            isiInput.value = isiData 
+            catatanInput.value = catatanData 
+            tanggalInput.value = tanggal
             todoIdInput.value = todoId 
         })
 

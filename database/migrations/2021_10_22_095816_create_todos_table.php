@@ -15,12 +15,12 @@ class CreateTodosTable extends Migration
     {
         Schema::create('todos', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned();
-            $table->string('judul');
-            $table->string('isi');
+            $table->foreignId('user_id');
+            $table->string('catatan')->nullable();
+            $table->date('tanggal');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('pengguna');            
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Todo extends Model
 {
     protected $table = "todos";
-    protected $fillable = ['user_id', 'judul', 'isi'];
+    protected $fillable = ['judul', 'catatan', 'tanggal'];
   
     use HasFactory;
 }

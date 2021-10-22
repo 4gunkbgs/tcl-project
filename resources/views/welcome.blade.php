@@ -30,12 +30,18 @@
                                 <label for="input">Judul Todo</label>        
                                 <input type="text" class="form-control mb-2"
                                     placeholder="Masukkan Judul" name="judulTodo" value="{{ old('judulTodo') }}">
-                                <label for="input">Isi Todo</label>
+
+                                <label for="input">Catatan</label>
                                 <input type="textarea" class="form-control mb-2"
-                                    placeholder="Masukkan Judul" name="isiTodo" value="{{ old('isiTodo') }}">
+                                    placeholder="Masukkan Catatan" name="catatanTodo" value="{{ old('catatanTodo') }}">
+
+                                <label for="input">Tanggal</label>    
+                                <input type="date" class="form-control mb-2"
+                                    placeholder="Masukkan Tanggal" name="dateTodo" value="{{ old('dateTodo') }}">
+                                        
                                 <label for="input">Tags</label>
                                 <input type="text" class="form-control mb-2"
-                                    placeholder="Masukkan tag" name="tags" value="{{ old('tags') }}">
+                                    placeholder="Masukkan Tag" name="tags" value="{{ old('tags') }}">
                             </div>                            
                             @csrf
                             <div class="modal-footer">
@@ -72,11 +78,11 @@
 
         <tr>
             <td> {{ $list->judul }}</td>
-            <td> {{ $list->isi }} </td>
+            <td> {{ $list->catatan }} </td>
             <td></td>            
-            <td></td>
+            <td> {{ $list->tanggal }}</td>
             <td>
-                <button type="button" class="btn btn-primary" data-judul="{{$list->judul}}" data-isi="{{ $list->isi }}" data-id="{{ $list->id }}" data-bs-toggle="modal" data-bs-target="#editModal">
+                <button type="button" class="btn btn-primary" data-judul="{{ $list->judul }}" data-catatan="{{ $list->catatan }}" data-id="{{ $list->id }}" data-tanggal ="{{ $list->tanggal }}" data-bs-toggle="modal" data-bs-target="#editModal">
                     Edit
                 </button>  
                 <button type="button" class="btn btn-danger" data-id="{{ $list->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal">
@@ -107,9 +113,13 @@
                             <input type="text" class="form-control mb-2"
                                 placeholder="Masukkan Judul" name="judulTodo" id="judulTodo" value="">
 
-                            <label for="input">Isi Todo</label>
+                            <label for="input">Catatan</label>
                             <input type="textarea" class="form-control mb-2"
-                                placeholder="Masukkan Judul" name="isiTodo" id="isiTodo" value="">
+                                placeholder="Masukkan Catatan Jika Ada" name="catatanTodo" id="catatanTodo" value="">
+
+                            <label for="input">Tanggal</label>
+                            <input type="date" class="form-control mb-2"
+                                placeholder="Masukkan Judul" name="tanggal" id="tanggal" value="">
                            
                         </div>                            
                         @csrf                        

@@ -14,7 +14,8 @@ class HomeController extends Controller
 {  
     public function todo(){
         
-        $todoList = Todo::all();            
+        $todoList = Todo::all();    
+        
 
         return view('welcome', ['todoList' => $todoList]);
     }

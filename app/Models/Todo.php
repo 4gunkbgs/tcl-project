@@ -11,4 +11,9 @@ class Todo extends Model
     protected $fillable = ['judul', 'catatan', 'tanggal'];
   
     use HasFactory;
+
+    public function tag(){
+     
+        return Tag::where('todo_id', $this->id)->first()->tag_name;
+    }
 }

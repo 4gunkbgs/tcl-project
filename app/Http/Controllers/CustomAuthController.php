@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Hash;
 use Session;
-use App\Models\Pengguna;
+use App\Models\Todo;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -66,7 +66,9 @@ class CustomAuthController extends Controller
     public function dashboard()
     {
         if(Auth::check()){
-            return view('welcome');
+            $todoList = Todo::all();            
+
+            return view('welcome', ['todoList' => $todoList]);
         }
   
         return redirect("/")->withSuccess('You are not allowed to access');

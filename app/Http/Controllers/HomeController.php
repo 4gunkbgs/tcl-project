@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Pengguna;
 use App\Models\Todo;
-use App\Models\Note;
 use App\Models\Tag;
+use App\Models\User;
 
 class HomeController extends Controller
 {  
@@ -15,19 +16,19 @@ class HomeController extends Controller
         
         $todoList = Todo::all();            
 
-        return view('todo', ['todoList' => $todoList]);
+        return view('welcome', ['todoList' => $todoList]);
     }
 
     public function todoStore(Request $request){        
-                   
+                          
         //untuk start transaction
         DB::beginTransaction(); 
 
         try {
-
+            
             //menyimpan judul dan isi todo pada tabel todos
             $todo = new Todo;
-            $todo->user_id = 1;
+            $todo->user_id = Auth::id();
             $todo->judul = $request->judulTodo;
             $todo->isi = $request->isiTodo;
             $todo->save();            
@@ -36,7 +37,7 @@ class HomeController extends Controller
             $tags = new Tag;
             $tags->tag = $request->tags;
             $tags->todos_id = $todo->id;
-            $tags->sav();
+            $tags->save();
 
             DB::commit();            
 
@@ -44,31 +45,22 @@ class HomeController extends Controller
             
             //rollback jika terjadi kesalahan
             DB::rollback();
-            return redirect('todo')->with('status', 'Terjadi Kesalahan');
+            return redirect('/home')->with('status', 'Terjadi Kesalahan');
         }
 
         //keterangan jika sukses
-        return redirect('todo')->with('status', 'Sukses');    
+        return redirect('/home')->with('status', 'Sukses');    
     }
 
-    public function notes(){
-
-        $noteList = Note::all();         
+    public function todoUpdate(Request $request){      
         
-        return view('notes', ['noteList' => $noteList]);
-    }
+        $todo = Todo::findOrFail($request->todoId);
 
-    public function noteStore(Request $request){
-
-        $note = new Note;
-        $note->user_id = 1;
-        $note->judul = $request->judulNotes;
-        $note->isi = $request->isiNotes;
-        $note->save();
-
-        return redirect('notes');
-
-    }
-
+        $todo->judul = $request->judulTodo;
+        $todo->isi = $request->isiTodo;
+        $todo->save(); 
+        
+        return back();
+    }   
     
 }

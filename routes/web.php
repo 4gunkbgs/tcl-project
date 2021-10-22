@@ -16,3 +16,4 @@ Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout')
 //HomeController
 Route::get('/todo', [HomeController::class, 'todo'])->name('todo');
 Route::post('/todo', [HomeController::class, 'todoStore']);
+Route::patch('/todo/update', [HomeController::class, 'todoUpdate'])->name('todo.update');

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2021 at 10:59 AM
+-- Generation Time: Oct 23, 2021 at 01:39 AM
 -- Server version: 10.4.21-MariaDB-log
 -- PHP Version: 8.0.10
 
@@ -64,11 +64,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2021_10_15_140537_create_todos_table', 4),
 (9, '2021_10_15_140608_create_notes_table', 4),
 (10, '2021_10_16_004253_create_tags_table', 5),
-(11, '2021_10_16_012440_add_todos_id_to_tags_table', 6),
 (12, '2021_10_16_013114_add_foreign_todos_id_to_tags_table', 7),
-(13, '2021_10_16_013428_add_tags_id_to_todos_table', 8),
 (14, '2021_10_21_072107_add_password_to_pengguna', 9),
-(15, '2021_10_22_085406_add_on_delete_to_tags', 10);
+(15, '2021_10_22_085406_add_on_delete_to_tags', 10),
+(16, '2021_10_22_095816_create_todos_table', 11),
+(17, '2021_10_22_100405_create_tags_table', 11),
+(19, '2021_10_22_111657_add_todo_id_to_tag', 12);
 
 -- --------------------------------------------------------
 
@@ -97,14 +98,6 @@ CREATE TABLE `pengguna` (
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `pengguna`
---
-
-INSERT INTO `pengguna` (`id`, `nama`, `email`, `created_at`, `updated_at`, `password`) VALUES
-(1, 'agung', 'agung@gmail.com', '2021-10-15 06:45:13', '2021-10-15 06:45:13', ''),
-(2, 'royan', 'royan@gmail.com', '2021-10-20 23:40:48', '2021-10-20 23:40:48', '$2y$10$hgM5SFCyT4mDoi5FRGPMWu79Jq0axizjbxoeWff9YJma8G.6MQUuq');
-
 -- --------------------------------------------------------
 
 --
@@ -131,18 +124,20 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `tags` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tag` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tag_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `todos_id` bigint(20) UNSIGNED NOT NULL
+  `todo_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tags`
 --
 
-INSERT INTO `tags` (`id`, `tag`, `created_at`, `updated_at`, `todos_id`) VALUES
-(15, 'matematika', '2021-10-22 00:57:47', '2021-10-22 00:57:47', 43);
+INSERT INTO `tags` (`id`, `tag_name`, `created_at`, `updated_at`, `todo_id`) VALUES
+(7, 'multimedia', '2021-10-22 03:21:41', '2021-10-22 03:21:41', 10),
+(8, 'multimedia', '2021-10-22 03:27:56', '2021-10-22 03:27:56', 11),
+(9, 'hewan', '2021-10-22 05:09:44', '2021-10-22 05:09:44', 12);
 
 -- --------------------------------------------------------
 
@@ -154,7 +149,8 @@ CREATE TABLE `todos` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `judul` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `isi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `catatan` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tanggal` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -163,8 +159,10 @@ CREATE TABLE `todos` (
 -- Dumping data for table `todos`
 --
 
-INSERT INTO `todos` (`id`, `user_id`, `judul`, `isi`, `created_at`, `updated_at`) VALUES
-(43, 1, 'buat function', 'besok buat function x kuadrat', '2021-10-22 00:57:47', '2021-10-22 00:57:47');
+INSERT INTO `todos` (`id`, `user_id`, `judul`, `catatan`, `tanggal`, `created_at`, `updated_at`) VALUES
+(10, 1, 'buat function', 'ssss', '2021-10-22', '2021-10-22 03:21:40', '2021-10-22 03:21:40'),
+(11, 1, 'buat grafik', '2020', '2021-10-23', '2021-10-22 03:27:55', '2021-10-22 05:24:00'),
+(12, 1, 'praktek kecambah', 'kecambah meki', '2021-10-24', '2021-10-22 05:09:44', '2021-10-22 05:09:44');
 
 -- --------------------------------------------------------
 
@@ -232,7 +230,7 @@ ALTER TABLE `personal_access_tokens`
 --
 ALTER TABLE `tags`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `tags_todos_id_foreign` (`todos_id`);
+  ADD KEY `tags_todo_id_foreign` (`todo_id`);
 
 --
 -- Indexes for table `todos`
@@ -262,7 +260,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `pengguna`
@@ -280,13 +278,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `todos`
 --
 ALTER TABLE `todos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -302,13 +300,13 @@ ALTER TABLE `users`
 -- Constraints for table `tags`
 --
 ALTER TABLE `tags`
-  ADD CONSTRAINT `tags_todos_id_foreign` FOREIGN KEY (`todos_id`) REFERENCES `todos` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `tags_todo_id_foreign` FOREIGN KEY (`todo_id`) REFERENCES `todos` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `todos`
 --
 ALTER TABLE `todos`
-  ADD CONSTRAINT `todos_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `pengguna` (`id`);
+  ADD CONSTRAINT `todos_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

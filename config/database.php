@@ -44,6 +44,20 @@ return [
         ],
 
         'mysql' => [
+            //secara replikasi harusnya dia sudah read ke ip 137.4 (pclain/vbox/vmware)
+            //dan write ke ip 137.37 (lokal)
+            //kalau ingin coba tanpa ini hapus dari read sampe write dan jalankan seperti biasa
+            // 'read' => [
+            //     'host' => [
+            //         '192.168.137.4',                                      
+            //     ],
+            // ],
+            // 'write' => [
+            //     'host' => [
+            //         '192.168.137.37',                    
+            //     ],
+            // ],
+                        
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),

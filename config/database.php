@@ -47,6 +47,8 @@ return [
             //secara replikasi harusnya dia sudah read ke ip 137.4 (pclain/vbox/vmware)
             //dan write ke ip 137.37 (lokal)
             //kalau ingin coba tanpa ini hapus dari read sampe write dan jalankan seperti biasa
+            //KALAU SLAVENYA MATI MATIKAN READ DAN WRITE NYA BIAR GK ERROR
+
             // 'read' => [
             //     'host' => [
             //         '192.168.137.4',                                      
@@ -54,7 +56,7 @@ return [
             // ],
             // 'write' => [
             //     'host' => [
-            //         '192.168.137.37',                    
+            //         '192.168.1.4',                    
             //     ],
             // ],
                         

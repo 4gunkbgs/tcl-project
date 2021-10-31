@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('content')
-<main class="login-form">
-    <div class="cotainer">
+<main class="login-form" >
+    <div class="cotainer" >
         <div class="row justify-content-center">
             <div class="col-md-4">
-                <div class="card">
-                    <h3 class="card-header text-center">Login</h3>
+                <div class="card" >
+                    <h3 class="card-header text-center" style="background-color: #20c997" >Login</h3>
                     <div class="card-body">
                         <form method="POST" action="{{ route('login.custom') }}">
                             @csrf
@@ -28,13 +28,13 @@
                             <div class="form-group mb-3">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="remember"> Remember Me
+                                        <input type="checkbox" name="remember"> Remember me
                                     </label>
                                 </div>
                             </div>
 
                             <div class="d-grid mx-auto">
-                                <button type="submit" class="btn btn-dark btn-block">Signin</button>
+                                <button type="submit" class="btn btn-dark btn-block">Sign In</button>
                             </div>
                         </form>
 

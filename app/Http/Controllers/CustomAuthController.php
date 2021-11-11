@@ -67,8 +67,10 @@ class CustomAuthController extends Controller
 
     public function dashboard()
     {
-        if(Auth::check()){
-            $todoList = Todo::all();               
+        if(Auth::check()){        
+            //check apakah user id di todo sama dengan user id yang login    
+            $todoList = Todo::where('user_id', Auth::id())->get();               
+                                    
             $user = Auth::user();                                                                      
  
             return view('welcome', ['todoList' => $todoList,

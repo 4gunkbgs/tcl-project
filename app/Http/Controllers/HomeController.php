@@ -45,18 +45,37 @@ class HomeController extends Controller
         return redirect('/home')->with('status', 'Sukses');    
     }
 
-    public function todoUpdate(Request $request){      
+    public function todoUpdate(Request $request){    
         
+        //untuk start transaction
+        DB::beginTransaction();
+
+        try {
+        
+        //cari id yang masuk ke tabel todo
         $todo = Todo::findOrFail($request->todoId);  
+
+        //cari id yang masuk ke tabel comment berdasarkan id todo
         $comment = Comment::where('todo_id', $request->todoId)->first();             
 
+        //update todo tabel
         $todo->judul = $request->judulTodo;        
         $todo->tanggal = $request->tanggal;
         $todo->tags = $request->tags;
         $todo->save();         
         
+        //update comment tabel
         $comment->isi = $request->catatanTodo;
         $comment->save();
+
+        DB::commit();  
+
+        } catch (\Throwable $th) {
+            
+            //rollback jika terjadi kesalahan
+            DB::rollback();
+            return redirect('/home')->with('status', 'Terjadi Kesalahan');
+        }
         
         return back();
     }   

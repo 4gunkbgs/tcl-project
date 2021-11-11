@@ -78,19 +78,18 @@
                         <th> Action </th>
                     </tr>
                 </thead>
-                <tbody>
-                    
-                    @foreach ($todoList as $list)                         
-                    <tr>
-                        <td> {{ $list->judul }}</td> 
-                        <td> {{ $list->comment() }}</td> 
-                        <td> {{ $list->tags}}</td>            
-                        <td> {{ $list->tanggal }}</td>
+                <tbody>                    
+                    @foreach ($todoList as $todo)                         
+                    <tr>                        
+                        <td> {{ $todo->judul }}</td> 
+                        <td> {{ $todo->comment() }}</td> 
+                        <td> {{ $todo->tags}}</td>            
+                        <td> {{ $todo->tanggal }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary" data-id="{{ $list->id }}" data-judul="{{ $list->judul }}" data-comment="{{ $list->comment() }}" data-tanggal ="{{ $list->tanggal }}" data-tags="{{ $list->tags }}" data-bs-toggle="modal" data-bs-target="#editModal">
+                            <button type="button" class="btn btn-primary" data-id="{{ $todo->id }}" data-judul="{{ $todo->judul }}" data-comment="{{ $todo->comment() }}" data-tanggal ="{{ $todo->tanggal }}" data-tags="{{ $todo->tags }}" data-bs-toggle="modal" data-bs-target="#editModal">
                                 Edit
                             </button>  
-                            <button type="button" class="btn btn-danger" data-id="{{ $list->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                            <button type="button" class="btn btn-danger" data-id="{{ $todo->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal">
                                 Delete
                             </button>               
                         </td>                      

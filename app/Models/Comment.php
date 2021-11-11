@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pengguna extends Model
+class Comment extends Model
 {
-    protected $table = "pengguna";
-    protected $fillable = ['nama', 'email', 'password'];        
+    protected $table = "comments";
+    protected $fillable = ['isi'];
     use HasFactory;
 }

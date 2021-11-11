@@ -5,21 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\Pengguna;
 use App\Models\Todo;
-use App\Models\Tag;
+use App\Models\Comment;
 use App\Models\User;
 
 class HomeController extends Controller
-{  
-    public function todo(){
-        
-        $todoList = Todo::all();    
-        
-
-        return view('welcome', ['todoList' => $todoList]);
-    }
-
+{     
     public function todoStore(Request $request){        
                                   
         //untuk start transaction
@@ -31,15 +22,15 @@ class HomeController extends Controller
             $todo = new Todo;
             $todo->user_id = Auth::id();
             $todo->judul = $request->judulTodo;
-            $todo->catatan = $request->catatanTodo;
             $todo->tanggal = $request->dateTodo;
-            $todo->save();            
-
-            //menyimpan tag pada tabel tags
-            $tags = new Tag;
-            $tags->tag_name = $request->tags;   
-            $tags->todo_id = $todo->id;         
-            $tags->save();
+            $todo->tags = $request->tags;
+            $todo->save();  
+                      
+            //menyimpan catatan pada tabel comments
+            $comments = new Comment;             
+            $comments->todo_id = $todo->id;    
+            $comments->isi = $request->catatanTodo;       
+            $comments->save();
 
             DB::commit();            
 
@@ -56,12 +47,16 @@ class HomeController extends Controller
 
     public function todoUpdate(Request $request){      
         
-        $todo = Todo::findOrFail($request->todoId);
+        $todo = Todo::findOrFail($request->todoId);  
+        $comment = Comment::where('todo_id', $request->todoId)->first();             
 
-        $todo->judul = $request->judulTodo;
-        $todo->catatan = $request->catatanTodo;
+        $todo->judul = $request->judulTodo;        
         $todo->tanggal = $request->tanggal;
-        $todo->save(); 
+        $todo->tags = $request->tags;
+        $todo->save();         
+        
+        $comment->isi = $request->catatanTodo;
+        $comment->save();
         
         return back();
     }   

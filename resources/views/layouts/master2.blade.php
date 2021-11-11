@@ -14,6 +14,7 @@
     <nav class="navbar navbar-light" style="background-color: #20c997" >
         <div class="container-fluid">
             <span class="navbar-brand mb-0 h1" class="navbar-brand mr-auto"> Memo </span>
+            <span class="navbar-brand mb-0 h1"> Sedang Login: {{ $user->name }}</span>
             <a href="{{ route('signout') }}" class="navbar-brand mb-0 h1"> Log Out </a> 
         </div>
     </nav>
@@ -31,21 +32,23 @@
             console.log ('modal opened')
 
             var button = event.relatedTarget
-            var judulData = button.getAttribute('data-judul')
-            var catatanData = button.getAttribute('data-catatan') 
-            var tanggal = button.getAttribute('data-tanggal')
             var todoId = button.getAttribute('data-id')
-
+            var judulData = button.getAttribute('data-judul')
+            var commentData = button.getAttribute('data-comment')
+            var tanggal = button.getAttribute('data-tanggal')
+            var tagsData = button.getAttribute('data-tags') 
+                  
+            const todoIdInput = document.getElementById('todoId')
             const judulInput = document.getElementById('judulTodo')
             const catatanInput = document.getElementById('catatanTodo')
-            const tagInput = document.getElementById('tags')
             const tanggalInput = document.getElementById('tanggal')
-            const todoIdInput = document.getElementById('todoId')
-            
+            const tagInput = document.getElementById('tags')
+                                    
             judulInput.value = judulData   
-            catatanInput.value = catatanData 
+            catatanInput.value = commentData 
             tanggalInput.value = tanggal
             todoIdInput.value = todoId 
+            tagInput.value = tagsData
         })
 
         //script untuk deleteModal

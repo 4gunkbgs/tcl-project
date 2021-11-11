@@ -6,7 +6,7 @@ use App\Http\Controllers\CustomAuthController;
 
 
 //AuthController
-Route::get('home', [CustomAuthController::class, 'dashboard']); 
+Route::get('home', [CustomAuthController::class, 'dashboard'])->name('dashboard'); 
 Route::get('/', [CustomAuthController::class, 'index'])->name('login');
 Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom'); 
 Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');

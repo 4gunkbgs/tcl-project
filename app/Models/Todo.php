@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Todo extends Model
 {
     protected $table = "todos";
-    protected $fillable = ['judul', 'catatan', 'tanggal'];
+    protected $fillable = ['judul', 'tags', 'tanggal'];
   
     use HasFactory;
 
-    public function tag(){
+    public function comment(){
      
-        return Tag::where('todo_id', $this->id)->first()->tag_name;
+        return Comment::where('todo_id', $this->id)->first()->isi;
     }
+    
 }

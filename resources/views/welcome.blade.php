@@ -79,14 +79,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($todoList as $list)        
+                    
+                    @foreach ($todoList as $list)                         
                     <tr>
-                        <td> {{ $list->judul }}</td>
-                        <td> {{ $list->catatan }} </td>
-                        <td> {{ $list->tag() }}</td>            
+                        <td> {{ $list->judul }}</td> 
+                        <td> {{ $list->comment() }}</td> 
+                        <td> {{ $list->tags}}</td>            
                         <td> {{ $list->tanggal }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary" data-judul="{{ $list->judul }}" data-catatan="{{ $list->catatan }}" data-id="{{ $list->id }}" data-tanggal ="{{ $list->tanggal }}" data-bs-toggle="modal" data-bs-target="#editModal">
+                            <button type="button" class="btn btn-primary" data-id="{{ $list->id }}" data-judul="{{ $list->judul }}" data-comment="{{ $list->comment() }}" data-tanggal ="{{ $list->tanggal }}" data-tags="{{ $list->tags }}" data-bs-toggle="modal" data-bs-target="#editModal">
                                 Edit
                             </button>  
                             <button type="button" class="btn btn-danger" data-id="{{ $list->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal">
@@ -100,6 +101,7 @@
             </table>    
     </div>
 </div>
+
     <!-- Edit Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -125,6 +127,10 @@
                             <label for="input">Tanggal</label>
                             <input type="date" class="form-control mb-2"
                                 placeholder="Masukkan Judul" name="tanggal" id="tanggal" value="">
+
+                            <label for="input">Tags</label>
+                            <input type="text" class="form-control mb-2"
+                                placeholder="Masukkan Tag" name="tags" id="tags" value="">
                            
                         </div>                            
                         @csrf                        

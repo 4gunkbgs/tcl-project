@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Hash;
 use Session;
 use App\Models\Todo;
-use App\Models\Tag;
+use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -68,9 +68,12 @@ class CustomAuthController extends Controller
     public function dashboard()
     {
         if(Auth::check()){
-            $todoList = Todo::all();                                                                         
+            $todoList = Todo::all();               
+            $user = Auth::user();                                                                      
  
-            return view('welcome', ['todoList' => $todoList]);
+            return view('welcome', ['todoList' => $todoList,
+                                    'user' => $user   
+                                    ]);
         }
   
         return redirect("/")->withSuccess('You are not allowed to access');

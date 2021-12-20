@@ -69,7 +69,7 @@ class CustomAuthController extends Controller
     {
         if(Auth::check()){        
             //check apakah user id di todo sama dengan user id yang login    
-            $todoList = Todo::where('user_id', Auth::id())->get();               
+            $todoList = Todo::with('comment2')->where('user_id', Auth::id())->get();                           
                                     
             $user = Auth::user();                                                                      
  

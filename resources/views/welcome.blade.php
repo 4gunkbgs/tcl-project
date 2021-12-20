@@ -82,7 +82,7 @@
                     @foreach ($todoList as $todo)                         
                     <tr>                        
                         <td> {{ $todo->judul }}</td> 
-                        <td> {{ $todo->comment() }}</td> 
+                        <td> {{ $todo->comment2->isi }}</td> 
                         <td> {{ $todo->tags}}</td>            
                         <td> {{ $todo->tanggal }}</td>
                         <td>

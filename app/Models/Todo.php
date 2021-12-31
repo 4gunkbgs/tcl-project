@@ -21,5 +21,10 @@ class Todo extends Model
      
         return $this->hasOne(Comment::class);
     }
+
+    public function user(){
+
+        return $this->belongsTo(User::class);
+    }
     
 }

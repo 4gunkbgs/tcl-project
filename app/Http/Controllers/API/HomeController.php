@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Todo;
 use App\Models\Comment;
@@ -17,7 +18,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $todoList = Todo::all();               
+        $todoList = Todo::with('comment2','user')->get();                  
         $response = [
             'message' => 'Menampilkan seluruh todo',
             'data' => $todoList

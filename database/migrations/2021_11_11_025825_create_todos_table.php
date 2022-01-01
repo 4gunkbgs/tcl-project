@@ -17,8 +17,7 @@ class CreateTodosTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('judul');
-            $table->date('tanggal');
-            $table->string('tags');
+            $table->date('tanggal');            
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

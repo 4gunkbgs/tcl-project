@@ -12,10 +12,10 @@
                         <form action="{{ route('register.custom') }}" method="POST">
                             @csrf
                             <div class="form-group mb-3">
-                                <input type="text" placeholder="Name" id="name" class="form-control" name="name"
+                                <input type="text" placeholder="Nama" id="nama" class="form-control" name="nama"
                                     required autofocus>
-                                @if ($errors->has('name'))
-                                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                                @if ($errors->has('nama'))
+                                    <span class="text-danger">{{ $errors->first('nama') }}</span>
                                 @endif
                             </div>
 

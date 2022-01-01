@@ -23,8 +23,7 @@ class HomeController extends Controller
             $todo = new Todo;
             $todo->user_id = Auth::id();
             $todo->judul = $request->judulTodo;
-            $todo->tanggal = $request->dateTodo;
-            $todo->tags = $request->tags;
+            $todo->tanggal = $request->dateTodo;            
             $todo->save();  
                       
             //menyimpan catatan pada tabel comments
@@ -39,7 +38,7 @@ class HomeController extends Controller
             $response = Http::post('http://localhost:3000/api/tag/', [
                 'id_user' =>  Auth::id(),
                 'id_todo' => $todo->id,
-                'tag' => $todo->tags
+                'tag' => $request->tags
             ]);
 
         } catch (\Throwable $th) {
@@ -69,8 +68,7 @@ class HomeController extends Controller
 
         //update todo tabel
         $todo->judul = $request->judulTodo;        
-        $todo->tanggal = $request->tanggal;
-        $todo->tags = $request->tags;
+        $todo->tanggal = $request->tanggal;        
         $todo->save();         
         
         //update comment tabel
@@ -83,7 +81,7 @@ class HomeController extends Controller
         $response = Http::patch('http://localhost:3000/api/tag/'.$todo->id, [
             'id_user' =>  Auth::id(),
             'id_todo' => $todo->id,
-            'tag' => $todo->tags
+            'tag' => $request->tags
         ]);
 
         } catch (\Throwable $th) {

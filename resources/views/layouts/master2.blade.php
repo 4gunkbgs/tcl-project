@@ -14,7 +14,7 @@
     <nav class="navbar navbar-light" style="background-color: #20c997" >
         <div class="container-fluid">
             <span class="navbar-brand mb-0 h1" class="navbar-brand mr-auto"> Memo </span>
-            <span class="navbar-brand mb-0 h1"> Sedang Login: {{ $user->name }}</span>
+            <span class="navbar-brand mb-0 h1"> Sedang Login: <b> {{ $user->nama }} </b> </span>
             <a href="{{ route('signout') }}" class="navbar-brand mb-0 h1"> Log Out </a> 
         </div>
     </nav>

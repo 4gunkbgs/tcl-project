@@ -35,44 +35,7 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {        
-        $validator = $request->validate([            
-            'judul' => 'required',            
-            'tanggal' => 'required|date',
-            'isi' => '',    
-            'tags' => 'required'
-        ]);     
-
-        $user_id = 3;
-
-        try{
-            //menyimpan judul dan isi todo pada tabel todos
-            $todo = new Todo;
-            $todo->user_id = $user_id;
-            $todo->judul = $request->judul;
-            $todo->tanggal = $request->tanggal;
-            $todo->tags = $request->tags;
-            $todo->save();  
-                      
-            //menyimpan catatan pada tabel comments
-            $comments = new Comment;             
-            $comments->todo_id = $todo->id;    
-            $comments->isi = $request->isi;       
-            $comments->save();
-
-            $data = Todo::with('comment2')->find($todo->id);            
-                        
-            $response = [
-                'message' => 'Todo Berhasil di Create',
-                'data' => $data
-            ];
-
-            return response()->json($response, 201);
-            
-        } catch (QueryException $e){
-            return response()->json([
-                'message' => 'failed '.$e->errorInfo
-            ]);
-        }    
+               
     }
 
     /**
@@ -83,7 +46,13 @@ class HomeController extends Controller
      */
     public function show($id)
     {
-        //
+        $todoList = Todo::with('comment2','user')->where('id', $id)->get();                  
+        $response = [
+            'message' => 'Menampilkan data todo si'.$id,
+            'data' => $todoList
+        ];
+
+        return response()->json($response, 200);
     }
 
     /**

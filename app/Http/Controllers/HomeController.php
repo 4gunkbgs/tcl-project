@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Models\Todo;
 use App\Models\Comment;
@@ -32,10 +33,18 @@ class HomeController extends Controller
             $comments->isi = $request->catatanTodo;       
             $comments->save();
 
-            DB::commit();            
+            DB::commit();  
+            
+            //kirim post ke api
+            $response = Http::post('http://localhost:3000/api/tag/', [
+                'id_user' =>  Auth::id(),
+                'id_todo' => $todo->id,
+                'tag' => $todo->tags
+            ]);
 
         } catch (\Throwable $th) {
             
+            dd($th);
             //rollback jika terjadi kesalahan
             DB::rollback();
             return redirect('/home')->with('status', 'Terjadi Kesalahan');
@@ -70,6 +79,13 @@ class HomeController extends Controller
 
         DB::commit();  
 
+        //update data sesuai id todo
+        $response = Http::patch('http://localhost:3000/api/tag/'.$todo->id, [
+            'id_user' =>  Auth::id(),
+            'id_todo' => $todo->id,
+            'tag' => $todo->tags
+        ]);
+
         } catch (\Throwable $th) {
             
             //rollback jika terjadi kesalahan
@@ -81,8 +97,9 @@ class HomeController extends Controller
     }   
 
     public function todoDelete(Request $request){
-
+        
         $todo = Todo::findOrFail($request->deleteTodoId);
+        $response = Http::delete('http://localhost:3000/api/tag/'.$todo->id);
         $todo->delete();
 
         return back();           
